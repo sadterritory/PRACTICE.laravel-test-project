@@ -35,8 +35,10 @@ Index page
             </div>
         </div>
         <hr>
-
     @endforeach
+    <div>
+        {{$workers->links()}}
+    </div>
 </div>
 
 </body>
