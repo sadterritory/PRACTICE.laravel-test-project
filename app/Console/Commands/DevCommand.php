@@ -4,8 +4,11 @@ namespace App\Console\Commands;
 
 use App\Models\Position;
 use App\Models\Profile;
+use App\Models\Project;
+use App\Models\ProjectWorker;
 use App\Models\Worker;
 use Illuminate\Console\Command;
+use Laravel\Prompts\Progress;
 
 class DevCommand extends Command
 {
@@ -29,16 +32,11 @@ class DevCommand extends Command
     public function handle()
     {
 //        $this->prepareData();
+//        $this->prepareManyToMany();
 
-        $position = Position::find(1);
-
-        $worker = Worker::find(1);
-
-        $position = Position::find(1);
-
-        dd($position->workers->toArray());
-
-
+        $project = Project::find(3);
+        $worker = Worker::find(2);
+        dd($worker->projects->toArray());
 
         return 0;
     }
@@ -150,7 +148,7 @@ class DevCommand extends Command
         ];
 
         $profileData4 = [
-            'worker_id' => $worker1->id,
+            'worker_id' => $worker4->id,
             'skill' => 'Backend',
             'finished_study_at' => '2025-07-01',
             'city' => 'Novosibirsk',
@@ -158,7 +156,7 @@ class DevCommand extends Command
         ];
 
         $profileData5 = [
-            'worker_id' => $worker2->id,
+            'worker_id' => $worker5->id,
             'skill' => 'DevOps',
             'finished_study_at' => '2021-02-01',
             'city' => 'Moscow',
@@ -166,7 +164,7 @@ class DevCommand extends Command
         ];
 
         $profileData6 = [
-            'worker_id' => $worker3->id,
+            'worker_id' => $worker6->id,
             'skill' => 'Backend',
             'finished_study_at' => '2026-07-03',
             'city' => 'Novosibirsk',
@@ -179,5 +177,85 @@ class DevCommand extends Command
         Profile::create($profileData4);
         Profile::create($profileData5);
         Profile::create($profileData6);
+    }
+
+    public function prepareManyToMany()
+    {
+        $workerManager = Worker::find(2);
+        $workerBackend1 = Worker::find(1);
+        $workerBackend2 = Worker::find(4);
+
+        $workerDesigner = Worker::find(5);
+        $workerFrontend1 = Worker::find(3);
+        $workerFrontend2 = Worker::find(6);
+
+        $project1 = Project::create([
+            'title' => 'Shop'
+        ]);
+
+        $project2 = Project::create([
+            'title' => 'Blog'
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project1->id,
+            'worker_id' => $workerManager->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project1->id,
+            'worker_id' => $workerBackend1->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project1->id,
+            'worker_id' => $workerBackend2->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project1->id,
+            'worker_id' => $workerFrontend1->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project1->id,
+            'worker_id' => $workerFrontend2->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project1->id,
+            'worker_id' => $workerDesigner->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project2->id,
+            'worker_id' => $workerManager->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project2->id,
+            'worker_id' => $workerBackend1->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project2->id,
+            'worker_id' => $workerBackend2->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project2->id,
+            'worker_id' => $workerFrontend1->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project2->id,
+            'worker_id' => $workerFrontend2->id,
+        ]);
+
+        ProjectWorker::create([
+            'project_id' => $project2->id,
+            'worker_id' => $workerDesigner->id,
+        ]);
+
     }
 }
