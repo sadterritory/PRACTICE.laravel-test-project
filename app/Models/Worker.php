@@ -9,4 +9,13 @@ class Worker extends Model
     protected $table = 'workers';
 
     protected $guarded = false;
+
+    public function profile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Profile::class, 'worker_id', 'id');
+    }
+
+    public function position() {
+        return $this->belongsTo(Position::class, 'position_id', 'id');
+    }
 }

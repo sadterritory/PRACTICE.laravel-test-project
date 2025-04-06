@@ -32,7 +32,7 @@ class IndexRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'from.integer' => 'Это поле должно быть числом',

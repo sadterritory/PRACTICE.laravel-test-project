@@ -12,7 +12,7 @@ use Illuminate\Session\Store;
 class WorkerController extends Controller
 {
     //action
-    public function index(IndexRequest $request)
+    public function index(IndexRequest $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
     {
 
         $data = $request->validated();
@@ -45,17 +45,17 @@ class WorkerController extends Controller
         return view('worker.index', compact('workers'));
     }
 
-    public function show(Worker $worker)
+    public function show(Worker $worker): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
     {
         return view('worker.show', compact('worker'));
     }
 
-    public function create()
+    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
     {
         return view('worker.create');
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): \Illuminate\Http\RedirectResponse
     {
         $data = $request->validated();
         $data['is_married'] = isset($data['is_married']);
@@ -63,12 +63,12 @@ class WorkerController extends Controller
         return redirect()->route('worker.index');
     }
 
-    public function edit(Worker $worker)
+    public function edit(Worker $worker): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
     {
         return view('worker.edit', compact('worker'));
     }
 
-    public function update(UpdateRequest $request, Worker $worker)
+    public function update(UpdateRequest $request, Worker $worker): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $data = $request->validated();
         $data['is_married'] = isset($data['is_married']);
@@ -76,7 +76,7 @@ class WorkerController extends Controller
         return redirect(route('worker.show', $worker->id));
     }
 
-    public function delete(Worker $worker)
+    public function delete(Worker $worker): \Illuminate\Http\RedirectResponse
     {
         $worker->delete();
         return redirect()->route('worker.index');
